@@ -7,7 +7,7 @@ terraform {
   }
   backend "s3" {
     bucket = "anuprasad2024-reomte-state"
-    key    = "expense-dev-bastion"
+    key    = "expense-dev-db"
     region = "us-east-1"
     dynamodb_table = "anuprasad2024-locking"
   }
