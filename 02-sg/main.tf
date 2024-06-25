@@ -54,7 +54,7 @@ module "ansible" {
 
 ## Security group rules##
 
-###### DB is accepting connections from backend #####
+# DB is accepting connections from backend
 resource "aws_security_group_rule" "db_backend" {
   type              = "ingress"
   from_port         = 3306
@@ -63,7 +63,7 @@ resource "aws_security_group_rule" "db_backend" {
   source_security_group_id = module.backend.sg_id # source is where you are getting traffic from
   security_group_id = module.db.sg_id
 }
-# db accepting connection from bastion
+
 resource "aws_security_group_rule" "db_bastion" {
   type              = "ingress"
   from_port         = 3306
@@ -73,7 +73,6 @@ resource "aws_security_group_rule" "db_bastion" {
   security_group_id = module.db.sg_id
 }
 
-# backend accepting connections from frontend
 resource "aws_security_group_rule" "backend_frontend" {
   type              = "ingress"
   from_port         = 8080
@@ -82,6 +81,7 @@ resource "aws_security_group_rule" "backend_frontend" {
   source_security_group_id = module.frontend.sg_id # source is where you are getting traffic from
   security_group_id = module.backend.sg_id
 }
+
 resource "aws_security_group_rule" "backend_bastion" {
   type              = "ingress"
   from_port         = 22
@@ -100,7 +100,6 @@ resource "aws_security_group_rule" "backend_ansible" {
   security_group_id = module.backend.sg_id
 }
 
-# frontend accepting connections from public
 resource "aws_security_group_rule" "frontend_public" {
   type              = "ingress"
   from_port         = 80
@@ -109,6 +108,7 @@ resource "aws_security_group_rule" "frontend_public" {
   cidr_blocks = ["0.0.0.0/0"]
   security_group_id = module.frontend.sg_id
 }
+
 resource "aws_security_group_rule" "frontend_bastion" {
   type              = "ingress"
   from_port         = 22
@@ -117,6 +117,7 @@ resource "aws_security_group_rule" "frontend_bastion" {
   source_security_group_id = module.bastion.sg_id # source is where you are getting traffic from
   security_group_id = module.frontend.sg_id
 }
+
 resource "aws_security_group_rule" "frontend_ansible" {
   type              = "ingress"
   from_port         = 22
